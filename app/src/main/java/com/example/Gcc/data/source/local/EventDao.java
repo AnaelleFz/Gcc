@@ -1,7 +1,9 @@
 package com.example.Gcc.data.source.local;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import java.util.List;
 
@@ -9,12 +11,12 @@ import java.util.List;
 @Dao
 public interface EventDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Event event);
 
     @Query("DELETE FROM event_table")
     void deleteAll();
 
     @Query("SELECT * from event_table ORDER BY description ASC")
-    List<Event> getAllEvents();
+    LiveData<List<Event>> getAllEvents();
 }
