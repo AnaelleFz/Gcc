@@ -9,15 +9,16 @@ import java.util.List;
 public class EventRepository {
 
     private EventDao eventDao;
+
     private LiveData<List<Event>> allEvents;
 
-    EventRepository(Application application){
+    public EventRepository(Application application){
         GccRoomDatabase database = GccRoomDatabase.getDatabase(application);
         eventDao = database.eventDao();
         allEvents = eventDao.getAllEvents();
     }
 
-    LiveData<List<Event>> getAllEvents(){
+    public LiveData<List<Event>> getAllEvents(){
         return allEvents;
     }
 
@@ -39,6 +40,8 @@ public class EventRepository {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
+
+
     }
 
 }
