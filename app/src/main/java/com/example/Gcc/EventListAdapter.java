@@ -42,7 +42,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         if(eventList != null){
             Event current = eventList.get(position);
-            holder.eventItemView.setText(current.getDescription());
+            holder.eventItemView.setText(current.getDesc());
         } else {
             holder.eventItemView.setText("No Event");
         }
