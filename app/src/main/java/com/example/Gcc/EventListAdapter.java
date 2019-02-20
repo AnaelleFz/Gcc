@@ -59,7 +59,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     }
 
     void setEventList(List<Event> eventList) {
-        eventList = eventList;
+        this.eventList = eventList;
         notifyDataSetChanged();
     }
 
