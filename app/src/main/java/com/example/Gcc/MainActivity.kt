@@ -1,8 +1,12 @@
 package com.example.Gcc
 
+import android.app.Activity
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -10,14 +14,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import kotlinx.android.synthetic.*
+import android.widget.Toast
+import com.example.Gcc.data.source.local.Event
+import com.example.Gcc.viewmodel.EventViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var eventViewModel: EventViewModel
+
+    val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,8 +34,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            val intent = Intent(this, NewEventActivity::class.java)
+            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -39,14 +47,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = EventListAdapter(this)
+        val viewAdapter = EventListAdapter(this)
 
         recyclerView = findViewById<RecyclerView>(R.id.myRecyclerView).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        eventViewModel = ViewModelProviders.of(this).get(EventViewModel::class.java)
+
+
+        eventViewModel.allEvents.observe(this,
+            Observer<List<Event>> { event ->
+                viewAdapter.setEventList(event)
+            })
     }
+
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -98,4 +115,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null && requestCode === NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
+            val event = Event(10, data.getStringExtra(NewEventActivity.EXTRA_REPLY))
+            eventViewModel.insert(event)
+        } else {
+            Toast.makeText(
+                applicationContext,
+                android.R.string.autofill,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
 }

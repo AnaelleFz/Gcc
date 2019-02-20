@@ -24,6 +24,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     }
 
     private final LayoutInflater inflater;
+
     private List<Event> eventList;
 
     public EventListAdapter(Context context) {
@@ -47,10 +48,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         }
     }
 
-    public void setEventList(List<Event> events){
-        eventList = events;
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getItemCount() {
@@ -60,4 +57,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             return 0;
         }
     }
+
+    void setEventList(List<Event> eventList) {
+        eventList = eventList;
+        notifyDataSetChanged();
+    }
+
 }
