@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.Gcc.data.source.local.Event;
+import com.example.Gcc.usecase.ModifyEventUseCase;
+import io.reactivex.disposables.CompositeDisposable;
 
 import java.util.List;
 
@@ -17,8 +19,15 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
 
     private List<Event> eventList;
 
-    public SearchEventListAdapter(Context context) {
+    private ModifyEventUseCase modifyEventUseCase;
+
+    private CompositeDisposable activityCompositeDisposable;
+
+    public SearchEventListAdapter(Context context, ModifyEventUseCase modifyEventUseCase,
+                                    CompositeDisposable compositeDisposable) {
         inflater = LayoutInflater.from(context);
+        this.modifyEventUseCase = modifyEventUseCase;
+        activityCompositeDisposable = compositeDisposable;
     }
 
     @NonNull
@@ -36,6 +45,13 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
         } else {
             searchEventViewHolder.eventItemView.setText("No Event");
         }
+
+        searchEventViewHolder.getEventItemView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -47,17 +63,21 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
         }
     }
 
-    class SearchEventViewHolder extends RecyclerView.ViewHolder {
-        private final TextView eventItemView;
+    void setEventList(List<Event> eventList) {
+        this.eventList = eventList;
+        notifyDataSetChanged();
+    }
 
+    class SearchEventViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView eventItemView;
         private SearchEventViewHolder(View itemView){
             super(itemView);
             eventItemView = itemView.findViewById(R.id.textReclViewSearch);
         }
-    }
 
-    void setEventList(List<Event> eventList) {
-        this.eventList = eventList;
-        notifyDataSetChanged();
+        public TextView getEventItemView() {
+            return eventItemView;
+        }
     }
 }

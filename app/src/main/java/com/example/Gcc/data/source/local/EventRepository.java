@@ -24,6 +24,13 @@ public class EventRepository {
         return instance;
     }
 
+    public static EventRepository getInstance() throws Exception {
+        if(instance == null){
+            throw new Exception();
+        }
+        return instance;
+    }
+
     private EventRepository(Application application){
         GccRoomDatabase database = GccRoomDatabase.getDatabase(application);
         eventDao = database.eventDao();
