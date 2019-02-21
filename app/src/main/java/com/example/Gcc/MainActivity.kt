@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var mainActivityViewModel: MainActivityViewModel
 
-    val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
+    val NEW_EVENT_ACTIVITY = 1
+    val NEW_SEARCH_ACTIVITY = 2
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +35,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         fab.setOnClickListener { view ->
             val intent = Intent(this, NewEventActivity::class.java)
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+            startActivityForResult(intent, NEW_EVENT_ACTIVITY)
+        }
+
+        fab2.setOnClickListener{ view ->
+            val intentSearch = Intent(this, SearchEventActivity::class.java)
+            startActivityForResult(intentSearch, NEW_SEARCH_ACTIVITY)
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -117,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null && requestCode === NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
+        if (data != null && requestCode === NEW_EVENT_ACTIVITY && resultCode === Activity.RESULT_OK) {
             val event = Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY))
             mainActivityViewModel.insert(event)
         } else {

@@ -46,6 +46,7 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
             return 0;
         }
     }
+
     class SearchEventViewHolder extends RecyclerView.ViewHolder {
         private final TextView eventItemView;
 
@@ -53,5 +54,10 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
             super(itemView);
             eventItemView = itemView.findViewById(R.id.textReclViewSearch);
         }
+    }
+
+    void setEventList(List<Event> eventList) {
+        this.eventList = eventList;
+        notifyDataSetChanged();
     }
 }

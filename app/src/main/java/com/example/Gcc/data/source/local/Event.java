@@ -2,6 +2,7 @@ package com.example.Gcc.data.source.local;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -16,6 +17,7 @@ public class Event {
     @ColumnInfo(name = "nbDay")
     private int nbDay;
 
+    @Ignore
     public Event(String desc){
         this.desc = desc;
     }
@@ -27,5 +29,17 @@ public class Event {
 
     public String getDesc(){
         return this.desc;
+    }
+
+    public void setDesc(String desc){
+        this.desc = desc;
+    }
+
+    public int getNbDay() {
+        return nbDay;
+    }
+
+    public void setNbDay(int nbDay) {
+        this.nbDay = nbDay;
     }
 }
