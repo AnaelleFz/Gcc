@@ -15,14 +15,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.Gcc.data.source.local.Event
-import com.example.Gcc.viewmodel.EventViewModel
+import com.example.Gcc.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var eventViewModel: EventViewModel
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
 
@@ -54,10 +54,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             adapter = viewAdapter
         }
 
-        eventViewModel = ViewModelProviders.of(this).get(EventViewModel::class.java)
+        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
 
-        eventViewModel.allEvents.observe(this,
+        mainActivityViewModel.allEvents.observe(this,
             Observer<List<Event>> { event ->
                 viewAdapter.setEventList(event)
             })
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null && requestCode === NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
             val event = Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY))
-            eventViewModel.insert(event)
+            mainActivityViewModel.insert(event)
         } else {
             Toast.makeText(
                 applicationContext,

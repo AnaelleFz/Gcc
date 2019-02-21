@@ -13,8 +13,16 @@ public class Event {
     @ColumnInfo(name = "desc")
     private String desc;
 
+    @ColumnInfo(name = "nbDay")
+    private int nbDay;
+
     public Event(String desc){
         this.desc = desc;
+    }
+
+    public Event(String desc, int nbDay){
+        this.desc = desc;
+        this.nbDay = nbDay;
     }
 
     public String getDesc(){

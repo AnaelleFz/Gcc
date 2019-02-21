@@ -9,13 +9,13 @@ import com.example.Gcc.data.source.local.EventRepository;
 
 import java.util.List;
 
-public class EventViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends AndroidViewModel {
 
     private EventRepository eventRepository;
 
     private LiveData<List<Event>> allEvents;
 
-    public EventViewModel(@NonNull Application application) {
+    public MainActivityViewModel(@NonNull Application application) {
         super(application);
         eventRepository = new EventRepository(application);
         allEvents = eventRepository.getAllEvents();
@@ -33,5 +33,9 @@ public class EventViewModel extends AndroidViewModel {
 
     public void insert(Event event){
         eventRepository.insert(event);
+    }
+
+    public void update(){
+
     }
 }

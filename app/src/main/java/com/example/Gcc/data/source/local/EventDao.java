@@ -19,4 +19,7 @@ public interface EventDao {
 
     @Query("SELECT * from event_table ORDER BY `desc` ASC")
     LiveData<List<Event>> getAllEvents();
+
+    @Query("SELECT * from event_table WHERE nbDay > 30  ORDER BY `desc` ASC")
+    LiveData<List<Event>> getEventDaySup30();
 }

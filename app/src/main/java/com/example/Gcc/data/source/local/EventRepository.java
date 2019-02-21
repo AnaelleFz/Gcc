@@ -12,14 +12,21 @@ public class EventRepository {
 
     private LiveData<List<Event>> allEvents;
 
+    private LiveData<List<Event>> eventsSup30;
+
     public EventRepository(Application application){
         GccRoomDatabase database = GccRoomDatabase.getDatabase(application);
         eventDao = database.eventDao();
         allEvents = eventDao.getAllEvents();
+        eventsSup30 = eventDao.getEventDaySup30();
     }
 
     public LiveData<List<Event>> getAllEvents(){
         return allEvents;
+    }
+
+    public LiveData<List<Event>> getEventsSup30() {
+        return eventsSup30;
     }
 
     public void insert(Event event){

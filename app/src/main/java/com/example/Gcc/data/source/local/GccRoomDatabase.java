@@ -48,11 +48,22 @@ public abstract class GccRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             dao.deleteAll();
+
             Event event = new Event("Hello event");
             dao.insert(event);
 
             Event event2 = new Event("Hello event 2");
             dao.insert(event2);
+
+            Event event3 = new Event("Hello event 3", 30);
+            dao.insert(event3);
+
+            Event event4 = new Event("Hello event 4", 45);
+            dao.insert(event4);
+
+            Event event5 = new Event("Hello event 5", 60);
+            dao.insert(event5);
+
             return null;
         }
     }
