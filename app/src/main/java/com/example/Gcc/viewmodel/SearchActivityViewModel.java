@@ -9,16 +9,16 @@ import com.example.Gcc.data.source.local.EventRepository;
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
+public class SearchActivityViewModel extends AndroidViewModel {
 
     private EventRepository eventRepository;
 
-    private LiveData<List<Event>> allEvents;
+    private LiveData<List<Event>> eventsSup30;
 
-    public MainActivityViewModel(@NonNull Application application) {
+    public SearchActivityViewModel(@NonNull Application application) {
         super(application);
         eventRepository = EventRepository.getInstance(application);
-        allEvents = eventRepository.getAllEvents();
+        eventsSup30 = eventRepository.getEventsSup30();
     }
 
     @NonNull
@@ -27,11 +27,11 @@ public class MainActivityViewModel extends AndroidViewModel {
         return super.getApplication();
     }
 
-    public LiveData<List<Event>> getAllEvents() {
-        return allEvents;
+    public LiveData<List<Event>> getEventsSup30() {
+        return eventsSup30;
     }
 
-    public void insert(Event event){
-        eventRepository.insert(event);
+    public void setEventsSup30(LiveData<List<Event>> eventsSup30) {
+        this.eventsSup30 = eventsSup30;
     }
 }

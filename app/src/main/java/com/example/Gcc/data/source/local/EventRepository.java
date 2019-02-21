@@ -2,6 +2,7 @@ package com.example.Gcc.data.source.local;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.media.AsyncPlayer;
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -14,18 +15,32 @@ public class EventRepository {
 
     private LiveData<List<Event>> eventsSup30;
 
-    public EventRepository(Application application){
+    //Singleton
+    private static EventRepository instance;
+
+    public static EventRepository getInstance(Application application){
+        if(instance == null){
+            instance = new EventRepository(application);
+        }
+        return instance;
+    }
+
+    private EventRepository(Application application){
         GccRoomDatabase database = GccRoomDatabase.getDatabase(application);
         eventDao = database.eventDao();
-        allEvents = eventDao.getAllEvents();
-        eventsSup30 = eventDao.getEventDaySup30();
     }
 
     public LiveData<List<Event>> getAllEvents(){
+        if(allEvents == null){
+            allEvents = eventDao.getAllEvents();
+        }
         return allEvents;
     }
 
     public LiveData<List<Event>> getEventsSup30() {
+        if(eventsSup30 == null){
+            eventsSup30 = eventDao.getEventDaySup30();
+        }
         return eventsSup30;
     }
 
@@ -47,8 +62,5 @@ public class EventRepository {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
-
-
     }
-
 }
