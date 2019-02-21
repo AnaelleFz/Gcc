@@ -46,11 +46,8 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
             searchEventViewHolder.eventItemView.setText("No Event");
         }
 
-        searchEventViewHolder.getEventItemView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        searchEventViewHolder.getEventItemView().setOnClickListener(view -> {
 
-            }
         });
     }
 
