@@ -33,12 +33,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             val intent = Intent(this, NewEventActivity::class.java)
             startActivityForResult(intent, NEW_EVENT_ACTIVITY)
         }
 
-        fab2.setOnClickListener{ view ->
+        fab2.setOnClickListener{
             val intentSearch = Intent(this, SearchEventActivity::class.java)
             startActivityForResult(intentSearch, NEW_SEARCH_ACTIVITY)
         }
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null && requestCode === NEW_EVENT_ACTIVITY && resultCode === Activity.RESULT_OK) {
+        if (data != null && requestCode == NEW_EVENT_ACTIVITY && resultCode == Activity.RESULT_OK) {
             val event = Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY))
             mainActivityViewModel.insert(event)
         } else {

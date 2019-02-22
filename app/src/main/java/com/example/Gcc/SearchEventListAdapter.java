@@ -19,14 +19,10 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
 
     private List<Event> eventList;
 
-    private ModifyEventUseCase modifyEventUseCase;
-
     private CompositeDisposable activityCompositeDisposable;
 
-    public SearchEventListAdapter(Context context, ModifyEventUseCase modifyEventUseCase,
-                                    CompositeDisposable compositeDisposable) {
+    public SearchEventListAdapter(Context context, CompositeDisposable compositeDisposable) {
         inflater = LayoutInflater.from(context);
-        this.modifyEventUseCase = modifyEventUseCase;
         activityCompositeDisposable = compositeDisposable;
     }
 

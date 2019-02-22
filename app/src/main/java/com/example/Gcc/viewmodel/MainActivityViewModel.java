@@ -17,7 +17,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
-        eventRepository = EventRepository.getInstance(application);
+        eventRepository = new EventRepository(application);
         allEvents = eventRepository.getAllEvents();
     }
 

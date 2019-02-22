@@ -14,24 +14,7 @@ public class EventRepository {
 
     private LiveData<List<Event>> eventsSup30;
 
-    //Singleton
-    private static EventRepository instance;
-
-    public static EventRepository getInstance(Application application){
-        if(instance == null){
-            instance = new EventRepository(application);
-        }
-        return instance;
-    }
-
-    public static EventRepository getInstance() throws Exception {
-        if(instance == null){
-            throw new Exception();
-        }
-        return instance;
-    }
-
-    private EventRepository(Application application){
+    public EventRepository(Application application){
         GccRoomDatabase database = GccRoomDatabase.getDatabase(application);
         eventDao = database.eventDao();
     }

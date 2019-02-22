@@ -17,7 +17,7 @@ public class SearchActivityViewModel extends AndroidViewModel {
 
     public SearchActivityViewModel(@NonNull Application application) {
         super(application);
-        eventRepository = EventRepository.getInstance(application);
+        eventRepository = new EventRepository(application);
         eventsSup30 = eventRepository.getEventsSup30();
     }
 

@@ -1,19 +1,15 @@
 package com.example.Gcc.usecase;
 
 import com.example.Gcc.data.source.local.Event;
+import com.example.Gcc.data.source.local.EventRepository;
 import io.reactivex.Completable;
 
 public class ModifyEventUseCase {
 
-    private ModifyEventUseCase(){}
+    private EventRepository eventRepository;
 
-    private static ModifyEventUseCase instance;
-
-    public static ModifyEventUseCase getInstance(){
-        if(instance == null){
-            instance = new ModifyEventUseCase();
-        }
-        return instance;
+    public ModifyEventUseCase(EventRepository eventRepository){
+        this.eventRepository = eventRepository;
     }
 
     public Completable modifyEventAsync(Event event){

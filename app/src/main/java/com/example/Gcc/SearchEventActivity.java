@@ -16,8 +16,6 @@ public class SearchEventActivity extends AppCompatActivity {
 
     private SearchEventListAdapter adapter;
 
-    private ModifyEventUseCase modifyEventUseCase;
-
     private CompositeDisposable compositeDisposable;
 
     @Override
@@ -27,10 +25,9 @@ public class SearchEventActivity extends AppCompatActivity {
 
         compositeDisposable = new CompositeDisposable();
 
-        modifyEventUseCase = ModifyEventUseCase.getInstance();
 
         RecyclerView recyclerView = findViewById(R.id.searchRecyclerView);
-        adapter = new SearchEventListAdapter(this, modifyEventUseCase, compositeDisposable);
+        adapter = new SearchEventListAdapter(this, compositeDisposable);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
