@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.example.Gcc.usecase.ModifyEventUseCase;
 import com.example.Gcc.viewmodel.SearchActivityViewModel;
-import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
 
 import javax.inject.Inject;
@@ -28,15 +27,14 @@ public class SearchEventActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((GccApp) getApplication()).getApplicationComponent().inject(this);
+        ((GccApp) getApplication()).getSearchActivityComponent().inject(this);
 
         setContentView(R.layout.activity_search_event);
 
         compositeDisposable = new CompositeDisposable();
 
-
         RecyclerView recyclerView = findViewById(R.id.searchRecyclerView);
-        adapter = new SearchEventListAdapter(this, compositeDisposable);
+        adapter = new SearchEventListAdapter(this, compositeDisposable, modifyEventUseCase);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = {ApplicationModule.class, RepositoryModule.class, UseCaseModule.class})
-public interface ApplicationComponent {
+public interface SearchActivityComponent {
 
     void inject(SearchEventActivity searchEventActivity);
 

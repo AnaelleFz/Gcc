@@ -1,20 +1,20 @@
 package com.example.Gcc;
 
 import android.app.Application;
-import com.example.Gcc.dagger.ApplicationComponent;
-import com.example.Gcc.dagger.DaggerApplicationComponent;
+import com.example.Gcc.dagger.DaggerSearchActivityComponent;
+import com.example.Gcc.dagger.SearchActivityComponent;
 
 public class GccApp extends Application {
 
-    private ApplicationComponent applicationComponent;
+    private SearchActivityComponent searchActivityComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationComponent = DaggerApplicationComponent.create();
+        searchActivityComponent = DaggerSearchActivityComponent.create();
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
+    public SearchActivityComponent getSearchActivityComponent() {
+        return searchActivityComponent;
     }
 }

@@ -16,10 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 import javax.inject.Inject;
 import java.util.List;
 
-public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventListAdapter.SearchEventViewHolder>{
-
-
-    ModifyEventUseCase modifyEventUseCase;
+public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventListAdapter.SearchEventViewHolder> {
 
     private final LayoutInflater inflater;
 
@@ -27,9 +24,14 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
 
     private CompositeDisposable activityCompositeDisposable;
 
-    public SearchEventListAdapter(Context context, CompositeDisposable compositeDisposable) {
-        inflater = LayoutInflater.from(context);
-        activityCompositeDisposable = compositeDisposable;
+    @Inject
+    public ModifyEventUseCase modifyEventUseCase;
+
+    public SearchEventListAdapter(Context context, CompositeDisposable compositeDisposable,
+                                  ModifyEventUseCase modifyEventUseCase) {
+        this.inflater = LayoutInflater.from(context);
+        this.activityCompositeDisposable = compositeDisposable;
+        this.modifyEventUseCase = modifyEventUseCase;
     }
 
     @NonNull
@@ -41,7 +43,7 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
 
     @Override
     public void onBindViewHolder(@NonNull SearchEventViewHolder searchEventViewHolder, int position) {
-        if(eventList != null){
+        if (eventList != null) {
             Event current = eventList.get(position);
             searchEventViewHolder.eventItemView.setText(current.getDesc());
         } else {
@@ -58,7 +60,7 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
 
     @Override
     public int getItemCount() {
-        if(eventList != null){
+        if (eventList != null) {
             return eventList.size();
         } else {
             return 0;
@@ -73,7 +75,8 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
     class SearchEventViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView eventItemView;
-        private SearchEventViewHolder(View itemView){
+
+        private SearchEventViewHolder(View itemView) {
             super(itemView);
             eventItemView = itemView.findViewById(R.id.textReclViewSearch);
         }
