@@ -9,11 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.Gcc.data.source.local.Event;
 import com.example.Gcc.usecase.ModifyEventUseCase;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventListAdapter.SearchEventViewHolder>{
+
+
+    ModifyEventUseCase modifyEventUseCase;
 
     private final LayoutInflater inflater;
 
@@ -42,9 +48,12 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
             searchEventViewHolder.eventItemView.setText("No Event");
         }
 
-        searchEventViewHolder.getEventItemView().setOnClickListener(view -> {
-
-        });
+        searchEventViewHolder.getEventItemView().setOnClickListener(view -> activityCompositeDisposable.add(
+                modifyEventUseCase
+                        .modifyEventAsync()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe()));
     }
 
     @Override

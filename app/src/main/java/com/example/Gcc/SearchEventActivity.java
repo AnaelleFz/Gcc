@@ -8,7 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.example.Gcc.usecase.ModifyEventUseCase;
 import com.example.Gcc.viewmodel.SearchActivityViewModel;
+import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
+
+import javax.inject.Inject;
 
 public class SearchEventActivity extends AppCompatActivity {
 
@@ -18,9 +21,15 @@ public class SearchEventActivity extends AppCompatActivity {
 
     private CompositeDisposable compositeDisposable;
 
+    @Inject
+    ModifyEventUseCase modifyEventUseCase;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((GccApp) getApplication()).getApplicationComponent().inject(this);
+
         setContentView(R.layout.activity_search_event);
 
         compositeDisposable = new CompositeDisposable();

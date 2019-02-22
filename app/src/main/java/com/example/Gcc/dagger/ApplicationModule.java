@@ -1,27 +1,24 @@
 package com.example.Gcc.dagger;
 
 import android.app.Application;
-import com.example.Gcc.data.source.local.EventRepository;
-import com.example.Gcc.usecase.ModifyEventUseCase;
 import dagger.Module;
 import dagger.Provides;
+
+import javax.inject.Singleton;
 
 @Module
 public class ApplicationModule {
 
-    private final Application application;
+    private final Application app;
 
-    public ApplicationModule(Application application){
-        this.application = application;
+    public ApplicationModule(Application app){
+        this.app = app;
     }
 
     @Provides
-    EventRepository provideEventRepository(Application application){
-        return new EventRepository(application);
+    @Singleton
+    Application providesApplication() {
+        return app;
     }
 
-    @Provides
-    ModifyEventUseCase provideModifyEventUseCase(EventRepository eventRepository){
-        return new ModifyEventUseCase(eventRepository);
-    }
 }
