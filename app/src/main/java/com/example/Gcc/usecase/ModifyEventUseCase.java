@@ -7,11 +7,9 @@ public class ModifyEventUseCase {
 
     EventRepository eventRepository;
 
-    /*
     public ModifyEventUseCase(EventRepository eventRepository){
         this.eventRepository = eventRepository;
     }
-     */
 
     public Completable modifyEventAsync() {
         return Completable.create(e -> modifyEvent());

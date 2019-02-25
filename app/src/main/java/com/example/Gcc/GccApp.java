@@ -1,8 +1,7 @@
 package com.example.Gcc;
 
 import android.app.Application;
-import com.example.Gcc.dagger.DaggerSearchActivityComponent;
-import com.example.Gcc.dagger.SearchActivityComponent;
+import com.example.Gcc.dagger.*;
 
 public class GccApp extends Application {
 
@@ -11,7 +10,11 @@ public class GccApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        searchActivityComponent = DaggerSearchActivityComponent.create();
+        searchActivityComponent = DaggerSearchActivityComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .repositoryModule(new RepositoryModule())
+                .useCaseModule(new UseCaseModule())
+                .build();
     }
 
     public SearchActivityComponent getSearchActivityComponent() {

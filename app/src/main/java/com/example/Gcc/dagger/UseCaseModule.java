@@ -10,16 +10,10 @@ import javax.inject.Singleton;
 @Module
 public class UseCaseModule {
 
-    /*
     @Provides
     @Singleton
     ModifyEventUseCase provideModifyEventUseCase(EventRepository eventRepository){
         return new ModifyEventUseCase(eventRepository);
-    } */
-
-    @Provides
-    @Singleton
-    ModifyEventUseCase provideModifyEventUseCase(){
-        return new ModifyEventUseCase();
     }
+
 }
