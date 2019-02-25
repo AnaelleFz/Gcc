@@ -4,7 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
-import com.example.Gcc.data.source.local.Event;
+import com.example.Gcc.data.source.local.event.Event;
 import com.example.Gcc.data.source.local.EventRepository;
 
 import java.util.List;

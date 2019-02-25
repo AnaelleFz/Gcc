@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.example.Gcc.data.source.local.Event;
+import com.example.Gcc.data.source.local.event.Event;
 
 import java.util.List;
 

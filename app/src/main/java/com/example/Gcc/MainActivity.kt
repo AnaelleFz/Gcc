@@ -14,7 +14,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.example.Gcc.data.source.local.Event
+import com.example.Gcc.data.source.local.event.Event
 import com.example.Gcc.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*

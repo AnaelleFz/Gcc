@@ -1,4 +1,4 @@
-package com.example.Gcc.data.source.local;
+package com.example.Gcc.data.source.local.event;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
