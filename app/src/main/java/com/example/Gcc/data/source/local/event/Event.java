@@ -45,4 +45,12 @@ public class Event {
     public void setNbDay(int nbDay) {
         this.nbDay = nbDay;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

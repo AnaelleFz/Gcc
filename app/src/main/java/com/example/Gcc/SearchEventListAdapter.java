@@ -1,14 +1,17 @@
 package com.example.Gcc;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import com.example.Gcc.data.source.local.event.Event;
 import com.example.Gcc.usecase.ModifyEventUseCase;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -24,6 +27,8 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
 
     private CompositeDisposable activityCompositeDisposable;
 
+    private Context context;
+
     @Inject
     public ModifyEventUseCase modifyEventUseCase;
 
@@ -32,6 +37,7 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
         this.inflater = LayoutInflater.from(context);
         this.activityCompositeDisposable = compositeDisposable;
         this.modifyEventUseCase = modifyEventUseCase;
+        this.context = context;
     }
 
     @NonNull
@@ -49,13 +55,7 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
         } else {
             searchEventViewHolder.eventItemView.setText("No Event");
         }
-
-        searchEventViewHolder.getEventItemView().setOnClickListener(view -> activityCompositeDisposable.add(
-                modifyEventUseCase
-                        .modifyEventAsync()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe()));
+        searchEventViewHolder.getEventItemView().setOnClickListener(view -> showCommentDialog());
     }
 
     @Override
@@ -70,6 +70,25 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
     void setEventList(List<Event> eventList) {
         this.eventList = eventList;
         notifyDataSetChanged();
+    }
+
+    private void showCommentDialog() {
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.event_comment_pop_up);
+        Button dialogBtn = dialog.findViewById(R.id.buttonAddComment);
+        dialogBtn.setOnClickListener(e -> {
+            callAddCommentUseCase();
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    private void callAddCommentUseCase() {
+        activityCompositeDisposable.add(modifyEventUseCase
+                .modifyEventAsync()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
     }
 
     class SearchEventViewHolder extends RecyclerView.ViewHolder {
