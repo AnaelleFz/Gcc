@@ -7,13 +7,17 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import com.example.Gcc.data.source.local.comment.Comment;
+import com.example.Gcc.data.source.local.comment.CommentDao;
 import com.example.Gcc.data.source.local.event.Event;
 import com.example.Gcc.data.source.local.event.EventDao;
 
-@Database(entities = {Event.class}, version = 1)
+@Database(entities = {Event.class, Comment.class}, version = 1)
 public abstract class GccRoomDatabase extends RoomDatabase {
 
     public abstract EventDao eventDao();
+
+    public abstract CommentDao commentDao();
 
     private static volatile GccRoomDatabase INSTANCE;
 
@@ -41,30 +45,32 @@ public abstract class GccRoomDatabase extends RoomDatabase {
             };
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void>{
-        private final EventDao dao;
+        private final EventDao eventDao;
+        private final CommentDao commentDao;
 
         PopulateDbAsync(GccRoomDatabase db){
-            dao = db.eventDao();
+            eventDao = db.eventDao();
+            commentDao = db.commentDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            dao.deleteAll();
+            eventDao.deleteAll();
 
             Event event = new Event("Hello event");
-            dao.insert(event);
+            eventDao.insert(event);
 
             Event event2 = new Event("Hello event 2");
-            dao.insert(event2);
+            eventDao.insert(event2);
 
             Event event3 = new Event("Hello event 3", 30);
-            dao.insert(event3);
+            eventDao.insert(event3);
 
             Event event4 = new Event("Hello event 4", 45);
-            dao.insert(event4);
+            eventDao.insert(event4);
 
             Event event5 = new Event("Hello event 5", 60);
-            dao.insert(event5);
+            eventDao.insert(event5);
 
             return null;
         }

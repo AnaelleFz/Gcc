@@ -1,6 +1,7 @@
 package com.example.Gcc.dagger;
 
 import android.app.Application;
+import com.example.Gcc.data.source.local.CommentRepository;
 import com.example.Gcc.data.source.local.EventRepository;
 import dagger.Module;
 import dagger.Provides;
@@ -15,4 +16,11 @@ public class RepositoryModule {
     EventRepository provideEventRepository(Application application){
         return new EventRepository(application);
     }
+
+    @Provides
+    @Singleton
+    CommentRepository provideCommentRepository(Application application){
+        return new CommentRepository(application);
+    }
+
 }

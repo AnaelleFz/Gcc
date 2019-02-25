@@ -8,10 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.example.Gcc.data.source.local.event.Event;
+import com.example.Gcc.usecase.AddCommentToEventUseCase;
 import com.example.Gcc.usecase.ModifyEventUseCase;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -29,14 +30,17 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
 
     private Context context;
 
+    private AddCommentToEventUseCase addCommentToEventUseCase;
+
     @Inject
     public ModifyEventUseCase modifyEventUseCase;
 
     public SearchEventListAdapter(Context context, CompositeDisposable compositeDisposable,
-                                  ModifyEventUseCase modifyEventUseCase) {
+                                  ModifyEventUseCase modifyEventUseCase, AddCommentToEventUseCase addCommentToEventUseCase) {
         this.inflater = LayoutInflater.from(context);
         this.activityCompositeDisposable = compositeDisposable;
         this.modifyEventUseCase = modifyEventUseCase;
+        this.addCommentToEventUseCase = addCommentToEventUseCase;
         this.context = context;
     }
 
@@ -55,7 +59,7 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
         } else {
             searchEventViewHolder.eventItemView.setText("No Event");
         }
-        searchEventViewHolder.getEventItemView().setOnClickListener(view -> showCommentDialog());
+        searchEventViewHolder.getEventItemView().setOnClickListener(view -> showCommentDialog(eventList.get(position)));
     }
 
     @Override
@@ -72,20 +76,21 @@ public class SearchEventListAdapter extends RecyclerView.Adapter<SearchEventList
         notifyDataSetChanged();
     }
 
-    private void showCommentDialog() {
+    private void showCommentDialog(Event event) {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.event_comment_pop_up);
+        EditText editText = dialog.findViewById(R.id.editCommentText);
         Button dialogBtn = dialog.findViewById(R.id.buttonAddComment);
         dialogBtn.setOnClickListener(e -> {
-            callAddCommentUseCase();
+            callAddCommentUseCase(editText.getText().toString(), event.getId());
             dialog.dismiss();
         });
         dialog.show();
     }
 
-    private void callAddCommentUseCase() {
-        activityCompositeDisposable.add(modifyEventUseCase
-                .modifyEventAsync()
+    private void callAddCommentUseCase(String comment, int idEvent) {
+        activityCompositeDisposable.add(addCommentToEventUseCase
+                .addCommentOnEventRx(comment, idEvent)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe());
