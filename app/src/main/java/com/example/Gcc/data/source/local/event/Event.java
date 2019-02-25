@@ -9,7 +9,10 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "event_table")
 public class Event {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int id;
+
     @NonNull
     @ColumnInfo(name = "desc")
     private String desc;
